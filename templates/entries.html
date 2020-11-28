@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h2>I am extending block content</h2>
-
     {% for entry in entries %}
         {{ entry.entry_name }}<br>
         {{ entry.category_name }}<br>
