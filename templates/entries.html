@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-
+    <h1>Hello there</h1>
     {% for entry in entries %}
         {{ entry.entry_name }}<br>
         {{ entry.category_name }}<br>
         {{ entry.entry_description }}<br>
         {{ entry.is_urgent }}<br>
     {% endfor %}
+    <h2> We are at the end</h2>
 
 {% endblock %}
