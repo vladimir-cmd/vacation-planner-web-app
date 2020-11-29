@@ -16,23 +16,23 @@
     <header>
         <nav class="nav-extended text-shadow deep-purple lighten-2">
             <div class="nav-wrapper">
-            <a href="#!" class="brand-logo">Vacation Planner</a>
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">New Entry</a></li>
-                <li><a href="#">Manage Entries</a></li>
-                <li><a href="#">Log Out</a></li>
-                <li><a href="#">Log In</a></li>
-                <li><a href="#">Register</a></li>
-            </ul>
+            <a href="{{ url_for('get_entries') }}" class="brand-logo">Vacation Planner</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{{ url_for('get_entries') }}">Home</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">New Entry</a></li>
+                    <li><a href="#">Manage Entries</a></li>
+                    <li><a href="#">Log Out</a></li>
+                    <li><a href="#">Log In</a></li>
+                    <li><a href="#">Register</a></li>
+                </ul>
             </div>
         </nav>
         <!-- Mobile sidenav -->
-        <ul class="sidenav" id="mobile-demo">
+        <ul id="slide-out" class="sidenav">
             <li><h4 class="center-align light-blue-text text-darken-4">Vacation Planer</h4></li>
-            <li><a href="#">Home</a></li>
+            <li><a href="{{ url_for('get_entries') }}">Home</a></li>
             <li><a href="#">Profile</a></li>
             <li><a href="#">New Entry</a></li>
             <li><a href="#">Manage Entries</a></li>
