@@ -25,7 +25,7 @@
                     <li><a href="#">Manage Entries</a></li>
                     <li><a href="#">Log Out</a></li>
                     <li><a href="#">Log In</a></li>
-                    <li><a href="#">Register</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
                 </ul>
             </div>
         </nav>
@@ -38,10 +38,9 @@
             <li><a href="#">Manage Entries</a></li>
             <li><a href="#">Log Out</a></li>
             <li><a href="#">Log In</a></li>
-            <li><a href="#">Register</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
         </ul>
     </header>
-    
     {% block content %}
     {% endblock %}
     
