@@ -21,7 +21,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/get_entries")
 def get_entries():
-    entries = mongo.db.entries.find()
+    entries = list(mongo.db.entries.find())
     return render_template("entries.html", entries=entries)
 
 

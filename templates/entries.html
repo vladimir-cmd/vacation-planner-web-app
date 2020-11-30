@@ -1,12 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Hello there</h1>
     {% for entry in entries %}
         {{ entry.entry_name }}<br>
         {{ entry.category_name }}<br>
         {{ entry.entry_description }}<br>
         {{ entry.is_urgent }}<br>
     {% endfor %}
-    <h2> We are at the end</h2>
+
+    <ul class="collapsible">
+        {% for entry in entries %}
+        <li>
+            <div class="collapsible-header white-text light-green darken-4 text-shadow">
+                <i class="fas fa-caret-down"></i>
+                <strong>{{ entry.entry_name}}</strong> : {{ entry.entry_description }}
+                {% if entry.is_urgent == "on" %}
+                    <i class="fas fa-exclamation-circle light-red-text text-lighten-2 tooltipped"
+                        data-position="right" data-tooltip="URGENT!"></i>
+                {% endif %}
+            </div>
+            <div class="collapsible-body">
+                <strong>{{ entry.category_name }}</strong>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
 
 {% endblock %}
