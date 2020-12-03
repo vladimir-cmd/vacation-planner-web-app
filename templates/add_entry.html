@@ -4,15 +4,34 @@
     <h3 class="light-blue-text text-darken-4 center-align">Add Entry</h3>
 
     <div class="row card-panel grey lighten-5">
-        <form class="col s12" method="POST" action="">
+        <form class="col s12" method="POST" action="{{ url_for('add_entry') }}">
+            <!-- Category Name -->
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="fas fa-pencil-alt prefix light-blue-text text-darken-4"></i>
-                    <input id="entry_name" name="entry_name" minlength="5" maxlength="50"
-                           type="text" class="validate" required>
-                    <label for="entry_name">Entry Name</label>
+                    <i class="fas fa-building prefix light-blue-text text-darken-4"></i>
+                    <select id="category_type" name="category_name" class="validate" required>
+                        <option value="" disabled selected>Choose Department</option>
+                        {% for category in categories %}
+                            <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="category_name">Select Category</label>
                 </div>
             </div>
+            <div class="row">
+            <!-- Entry Name -->
+                <div class="input-field col s12">
+                    <i class="fas fa-pencil-alt prefix light-blue-text text-darken-4"></i>
+                    <select id="entry_type" name="entry_type" class="validate" required>
+                        <option value="" disabled selected>Choose Entry Type</option>
+                        {% for t in type %}
+                            <option value="{{ t.entry_type }}">{{ t.entry_type }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="entry_type">Select Entry Type</label>
+                </div>
+            </div>
+            <!-- Entry Description -->
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-align-left prefix light-blue-text text-darken-4"></i>
@@ -21,14 +40,25 @@
                     <label for="entry_description">Entry Description</label>
                 </div>
             </div>
+            <!-- Start Date picker -->
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-calendar-alt prefix light-blue-text text-darken-4"></i>
-                    <input id="date" name="date" class="datepicker validate"
+                    <input id="start_date" name="start_date" class="datepicker validate"
                            type="text" required>
-                    <label for="entry_name">Date</label>
+                    <label for="start_date">Start Date</label>
                 </div>
             </div>
+            <!-- Start Date picker -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-calendar-alt prefix light-blue-text text-darken-4"></i>
+                    <input id="end_date" name="end_date" class="datepicker validate"
+                           type="text" required>
+                    <label for="end_date">End Date</label>
+                </div>
+            </div>
+            <!-- Half day switch -->
             <div class="row">
                 <div class="input-field col s12">
                     <!-- Switch -->
@@ -40,6 +70,14 @@
                             Half Day
                         </label>
                     </div>
+                </div>
+            </div>
+<!--             Submit Button -->
+            <div class="row">
+                <div class="col s12 center-align">
+                    <button type="submit" class="btn-large light-blue darken-1 text-shadow">
+                        Add Entry <i class="fas fa-plus-square right"></i>
+                    </button>
                 </div>
             </div>
         </form>

@@ -94,9 +94,26 @@ def logout():
     session.pop("user")
     return redirect(url_for("login"))
 
-@app.route("/add_entry")
+
+@app.route("/add_entry", methods=["GET", "POST"])
 def add_entry():
-    return render_template("add_entry.html")
+    if request.method == "POST":
+        half_day = "on" if request.form.get("half_day") else "off"
+        entry = {
+            "category_name": request.form.get("category_name"),
+            "entry_type": request.form.get("entry_type"),
+            "entry_description": request.form.get("entry_description"),
+            "start_date": request.form.get("start_date"),
+            "end_date": request.form.get("end_date"),
+            "half_day": half_day,
+            "created_by": session["user"]
+        }
+        mongo.db.entries.insert_one(entry)
+        flash("Entry successfully added")
+        return redirect(url_for("get_entries"))
+
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    return render_template("add_entry.html", categories=categories)
 
 
 if __name__ == "__main__":
