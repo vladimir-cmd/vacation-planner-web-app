@@ -119,6 +119,20 @@ def add_entry():
 
 @app.route("/edit_entry/<entry_id>", methods=["GET", "POST"])
 def edit_entry(entry_id):
+    if request.method == "POST":
+        half_day = "on" if request.form.get("half_day") else "off"
+        update = {
+            "category_name": request.form.get("category_name"),
+            "entry_type": request.form.get("entry_type"),
+            "entry_description": request.form.get("entry_description"),
+            "start_date": request.form.get("start_date"),
+            "end_date": request.form.get("end_date"),
+            "half_day": half_day,
+            "created_by": session["user"]
+        }
+        mongo.db.entries.update({"_id": ObjectId(entry_id)}, update)
+        flash("Entry successfully Updated!")
+
     entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})
 
     categories = mongo.db.categories.find().sort("category_name", 1)
