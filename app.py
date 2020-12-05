@@ -117,6 +117,15 @@ def add_entry():
     return render_template("add_entry.html", categories=categories, vacation_types=vacation_types)
 
 
+@app.route("/edit_entry/<entry_id>", methods=["GET", "POST"])
+def edit_entry(entry_id):
+    entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})
+
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    vacation_types = mongo.db.vacation_types.find().sort("entry_type", 1)
+    return render_template("add_entry.html", categories=categories, vacation_types=vacation_types, entry=entry)
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
