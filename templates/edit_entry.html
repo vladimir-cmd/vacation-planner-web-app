@@ -10,9 +10,13 @@
                 <div class="input-field col s12">
                     <i class="fas fa-building prefix light-blue-text text-darken-4"></i>
                     <select id="category_type" name="category_name" class="validate" required>
-                        <option value="" disabled selected>Choose Department</option>
+                        <option value="" disabled>Choose Department</option>
                         {% for category in categories %}
-                            <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                            {% if category.category_name == entry.category_name %}
+                                <option value="{{ category.category_name }}" selected>{{ category.category_name }}</option>
+                            {% else %}
+                                <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                     <label for="category_name">Select Category</label>
@@ -23,9 +27,13 @@
                 <div class="input-field col s12">
                     <i class="fas fa-pencil-alt prefix light-blue-text text-darken-4"></i>
                     <select id="entry_type" name="entry_type" class="validate" required>
-                        <option value="" disabled selected>Choose Entry Type</option>
+                        <option value="" disabled>Choose Entry Type</option>
                         {% for vacation in vacation_types %}
-                            <option value="{{ vacation.entry_type }}">{{ vacation.entry_type }}</option>
+                            {% if vacation.entry_type == entry.entry_type %}
+                                <option value="{{ vacation.entry_type }}" selected>{{ vacation.entry_type }}</option>
+                            {% else %}
+                                <option value="{{ vacation.entry_type }}">{{ vacation.entry_type }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                     <label for="entry_type">Select Entry Type</label>
@@ -36,7 +44,9 @@
                 <div class="input-field col s12">
                     <i class="fas fa-align-left prefix light-blue-text text-darken-4"></i>
                     <textarea id="entry_description" name="entry_description" minlength="5"
-                              maxlength="200" class="materialize-textarea validate" required></textarea>
+                              maxlength="200" class="materialize-textarea validate" required>
+                        {{- entry.entry_description -}}
+                    </textarea>
                     <label for="entry_description">Entry Description</label>
                 </div>
             </div>
@@ -45,7 +55,7 @@
                 <div class="input-field col s12">
                     <i class="fas fa-calendar-alt prefix light-blue-text text-darken-4"></i>
                     <input id="start_date" name="start_date" class="datepicker validate"
-                           type="text" required>
+                           type="text"  value="{{ entry.start_date }}" required>
                     <label for="start_date">Start Date</label>
                 </div>
             </div>
@@ -54,7 +64,7 @@
                 <div class="input-field col s12">
                     <i class="fas fa-calendar-alt prefix light-blue-text text-darken-4"></i>
                     <input id="end_date" name="end_date" class="datepicker validate"
-                           type="text" required>
+                           type="text" value="{{ entry.end_date }}" required>
                     <label for="end_date">End Date</label>
                 </div>
             </div>
@@ -65,16 +75,24 @@
                     <div class="switch">
                         <i class="fas fa-exclamation-circle prefix light-blue-text text-darken-4"></i>
                         <label for="half_day">
-                            <input type="checkbox" id="half_day" name="half_day">
+                            {% if entry.half_day == "on" %}
+                                <input type="checkbox" id="half_day" name="half_day" checked>
+                            {% else %}
+                                <input type="checkbox" id="half_day" name="half_day">
+                            {% endif %}
                             <span class="lever"></span>
                             Half Day
                         </label>
                     </div>
                 </div>
             </div>
-<!--             Submit Button -->
             <div class="row">
                 <div class="col s12 center-align">
+                    <!-- Cancel Button -->
+                    <a href="{{ url_for('get_entries') }}" class="btn-large red text-shadow">
+                        Cancel <i class="fas fa-times-circle right"></i>
+                    </a>
+                    <!-- Edit Button -->
                     <button type="submit" class="btn-large light-blue darken-1 text-shadow">
                         Edit Entry <i class="fas fa-edit right"></i>
                     </button>

@@ -22,7 +22,7 @@ mongo = PyMongo(app)
 @app.route("/get_entries")
 def get_entries():
     entries = list(mongo.db.entries.find())
-    return render_template("entries.html", entries=entries)
+    return render_template("manage_entries.html", entries=entries)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -123,7 +123,7 @@ def edit_entry(entry_id):
 
     categories = mongo.db.categories.find().sort("category_name", 1)
     vacation_types = mongo.db.vacation_types.find().sort("entry_type", 1)
-    return render_template("add_entry.html", categories=categories, vacation_types=vacation_types, entry=entry)
+    return render_template("edit_entry.html", categories=categories, vacation_types=vacation_types, entry=entry)
 
 
 if __name__ == "__main__":
