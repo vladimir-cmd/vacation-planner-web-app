@@ -1,8 +1,5 @@
 $(document).ready(function(){
     $('.sidenav').sidenav({edge: "right"});
-  });
-
- $(document).ready(function(){
     $('.collapsible').collapsible();
     $(".tooltipped").tooltip();
     $('.datepicker').datepicker({
@@ -11,10 +8,10 @@ $(document).ready(function(){
       showClearBtn: true,
       i18n: {
         done: "Select"
-      }
+      },
+      disableWeekends: true
     });
     $('select').formSelect();
-
     validateMaterializeSelect();
     function validateMaterializeSelect() {
         let classValid = { "border-bottom": "1px solid #4caf50", "box-shadow": "0 1px 0 0 #4caf50" };
@@ -42,4 +39,58 @@ $(document).ready(function(){
             }
         });
     }
+  });
+
+$(document).ready(function(){
+    $('#calendar').fullCalendar({
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,basicWeek,basicDay'
+        },
+        defaultDate: '2020-12-12',
+        navLinks: true, // can click day/week names to navigate views
+        editable: true,
+        eventLimit: true, // allow "more" link when too many events
+        events: [
+          {
+            title: 'All Day Event',
+            start: '2020-12-11'
+          },
+          {
+            title: 'Long Event',
+            start: '2020-12-22',
+            end: '2020-12-30'
+          },
+          {
+            id: 999,
+            title: 'Repeating Event',
+            start: '2020-12-09T16:00:00'
+          },
+          {
+            id: 999,
+            title: 'Repeating Event',
+            start: '2020-12-16T16:00:00'
+          },
+          {
+            title: 'Conference',
+            start: '2020-12-11',
+            end: '2020-12-13'
+          },
+          {
+            title: 'Meeting',
+            start: '2020-12-12T10:30:00',
+            end: '2020-12-12T12:30:00'
+          },
+          {
+            title: 'Lunch',
+            start: '2020-12-12T12:00:00'
+          },
+          {
+            title: 'Click for Google',
+            url: 'https://google.com/',
+            start: '2020-12-28'
+          }
+        ]
+      });
   });

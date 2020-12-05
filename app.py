@@ -25,6 +25,13 @@ def manage_entries():
     return render_template("manage_entries.html", entries=entries)
 
 
+@app.route("/calendar_home")
+def calendar_home():
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    return render_template("calendar_home.html")
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
