@@ -24,8 +24,8 @@
                     <i class="fas fa-pencil-alt prefix light-blue-text text-darken-4"></i>
                     <select id="entry_type" name="entry_type" class="validate" required>
                         <option value="" disabled selected>Choose Entry Type</option>
-                        {% for t in type %}
-                            <option value="{{ t.entry_type }}">{{ t.entry_type }}</option>
+                        {% for vacation in vacation_types %}
+                            <option value="{{ vacation.entry_type }}">{{ vacation.entry_type }}</option>
                         {% endfor %}
                     </select>
                     <label for="entry_type">Select Entry Type</label>

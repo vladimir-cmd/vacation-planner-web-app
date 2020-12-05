@@ -34,12 +34,12 @@ def register():
         if existing_user:
             flash("Username already exists")
             return redirect(url_for("register"))
-        register = {
+        register_user = {
             "username": request.form.get("username").lower(),
             "password": generate_password_hash(request.form.get("password"))
         }
 
-        mongo.db.users.insert_one(register)
+        mongo.db.users.insert_one(register_user)
 
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
@@ -113,7 +113,8 @@ def add_entry():
         return redirect(url_for("get_entries"))
 
     categories = mongo.db.categories.find().sort("category_name", 1)
-    return render_template("add_entry.html", categories=categories)
+    vacation_types = mongo.db.vacation_types.find().sort("entry_type", 1)
+    return render_template("add_entry.html", categories=categories, vacation_types=vacation_types)
 
 
 if __name__ == "__main__":
