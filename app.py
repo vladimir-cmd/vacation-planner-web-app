@@ -19,8 +19,8 @@ mongo = PyMongo(app)
 
 
 @app.route("/")
-@app.route("/get_entries")
-def get_entries():
+@app.route("/manage_entries")
+def manage_entries():
     entries = list(mongo.db.entries.find())
     return render_template("manage_entries.html", entries=entries)
 
@@ -110,7 +110,7 @@ def add_entry():
         }
         mongo.db.entries.insert_one(entry)
         flash("Entry successfully added")
-        return redirect(url_for("get_entries"))
+        return redirect(url_for("manage_entries"))
 
     categories = mongo.db.categories.find().sort("category_name", 1)
     vacation_types = mongo.db.vacation_types.find().sort("entry_type", 1)
@@ -138,6 +138,13 @@ def edit_entry(entry_id):
     categories = mongo.db.categories.find().sort("category_name", 1)
     vacation_types = mongo.db.vacation_types.find().sort("entry_type", 1)
     return render_template("edit_entry.html", categories=categories, vacation_types=vacation_types, entry=entry)
+
+
+@app.route("/delete_entry/<entry_id>")
+def delete_entry(entry_id):
+    mongo.db.entries.remove({"_id": ObjectId(entry_id)})
+    flash("Task Successfully Deleted!")
+    return redirect(url_for("manage_entries"))
 
 
 if __name__ == "__main__":
