@@ -1,6 +1,6 @@
 import os
 from flask import (
-    Flask, flash, render_template, 
+    Flask, flash, render_template,
     request, session, redirect, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
@@ -23,13 +23,6 @@ mongo = PyMongo(app)
 def manage_entries():
     entries = list(mongo.db.entries.find())
     return render_template("manage_entries.html", entries=entries)
-
-
-@app.route("/calendar_home")
-def calendar_home():
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
-    return render_template("calendar_home.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -152,6 +145,12 @@ def delete_entry(entry_id):
     mongo.db.entries.remove({"_id": ObjectId(entry_id)})
     flash("Task Successfully Deleted!")
     return redirect(url_for("manage_entries"))
+
+
+@app.route("/calendar_home")
+def calendar_home():
+    entries = mongo.db.entries.find()
+    return render_template("calendar_home.html", entries=entries)
 
 
 if __name__ == "__main__":
