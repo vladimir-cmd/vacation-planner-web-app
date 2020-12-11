@@ -41,37 +41,3 @@ $(document).ready(function(){
     }
   });
 
-
-
-//  $(document).ready(function(){
-//
-//    $('#calendar').fullCalendar({
-//
-//    header: {
-//      left: 'prev,next today',
-//      center: 'title',
-//      right: 'month,basicWeek,basicDay'
-//    },
-//    weekends: false,
-//    weekNumbers: true,
-//    defaultView: 'month',
-//    defaultDate: '2020-12-12',
-//    navLinks: true, // can click day/week names to navigate views
-//    editable: true,
-//    eventLimit: true, // allow "more" link when too many events
-//    events: [
-//    ],
-//    themeSystem: 'jquery-ui',
-//    themeName: 'Cupertino',
-//    cache: true,
-//
-//    eventClick: function(info) {
-//        alert('Event: ' + info.event.title);
-//        alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-//        alert('View: ' + info.view.type);
-//
-//        // change the border color just for fun
-//        info.el.style.borderColor = 'red';
-//      }
-//     });
-//    });

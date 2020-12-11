@@ -11,43 +11,45 @@
 
                 $('#calendar').fullCalendar({
 
-                header: {
-                  left: 'prev,next today',
-                  center: 'title',
-                  right: 'month,basicWeek,basicDay'
-                },
-                weekNumbers: true,
-                defaultView: 'month',
-                defaultDate: '2020-12-09',
-                navLinks: true, // can click day/week names to navigate views
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
-
-                events: [
-                  {% for entry in entries %}
-                    {
-                      id: '{{ entry.category_name }}',
-                      title: '{{ entry.entry_type }}',
-                      start: '{{ entry.start_date }}',
-                      end: '{{ entry.end_date }}'
+                    header: {
+                      left: 'prev,next today',
+                      center: 'title',
+                      right: 'month,basicWeek,basicDay'
                     },
-                  {% endfor %}
-                  ],
+                    weekNumbers: true,
+                    defaultView: 'month',
+                    defaultDate: '2020-12-09',
+                    navLinks: true, // can click day/week names to navigate views
+                    editable: true,
+                    eventLimit: true, // allow "more" link when too many events
 
-                themeSystem: 'jquery-ui',
-                themeName: 'Cupertino',
-                cache: true,
+                    events: [
+                          {% for entry in entries %}
+                            {
+                              id: '{{ entry.category_name }}',
+                              title: '{{ entry.entry_type }}',
+                              start: '{{ entry.start_date }}',
+                              end: '{{ entry.end_date }}',
+                              table_id: '{{ entry._id }}',
+                            },
+                          {% endfor %}
+                    ],
 
-                eventClick: function(info) {
-                    alert('Event: ' + info.event.title);
-                    alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-                    alert('View: ' + info.view.type);
+                    themeSystem: 'jquery-ui',
+                    themeName: 'Cupertino',
+                    cache: true,
 
-                    // change the border color just for fun
-                    info.el.style.borderColor = 'red';
-                  }
-                 });
+                    eventClick: function(calEvent, jsEvent, view){
+                        $(this).toggleClass('newColor');
+                        window.open('http://localhost:5000/edit_entry/' + calEvent.table_id, "_self");
+                        console.log(calEvent); // "id" if it is set by the event object, will be here.
+                        console.log(this);  // is the div element that was clicked on
+                    }
+
+                    });
                 });
+
+
             </script>
 
     </div>
