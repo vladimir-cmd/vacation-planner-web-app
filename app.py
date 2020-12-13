@@ -10,9 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 if os.path.exists("env.py"):
     import env
-from datetime import datetime,date,timedelta
-import numpy as np
-import pandas as pd
+from datetime import datetime,timedelta
 
 app = Flask(__name__)
 
@@ -92,12 +90,28 @@ def login():
 def profile(username):
     # get username from Mongo DB
     username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
+        {"username": session["user"]})
 
     if session['user']:
         return render_template("profile.html", username=username)
 
     return redirect(url_for('login.html'))
+
+
+@app.route("/profile_update/<username>", methods=["GET", "POST"])
+def profile_update(username):
+    # Update profile info
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})
+
+    return render_template("edit_profile.html", username=username)
+
+
+@app.route("/delete_profile", methods=["GET", "POST"])
+def delete_profile(username):
+    # Delete profile
+
+    return redirect(url_for('register.html'))
 
 
 @app.route("/logout")
@@ -151,7 +165,7 @@ def add_entry():
 def edit_entry(entry_id):
     if request.method == "POST":
         half_day = "on" if request.form.get("half_day") else "off"
-        user = mongo.db.users.find_one({ 'username' : session["user"]})
+        user = mongo.db.users.find_one({'username': session["user"]})
 
         # First get the current vacation date frame and update vacation days with that number
         entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})

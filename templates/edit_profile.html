@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="light-blue-text text-darken-4 center-align">Update Profile</h2>
+
+<div class="row card-panel grey lighten-5">
+  <form class="col s12" method="POST" action="{{ url_for('profile_update', username=username) }}">
+    <!-- First Name -->
+    <div class="row">
+      <div class="input-field col s12">
+        <i class="fas fa-align-left prefix light-blue-text text-darken-4"></i>
+        <textarea id="first_name" name="first_name" minlength="5"
+                  maxlength="200" class="materialize-textarea validate" required>
+                    </textarea>
+        <label for="first_name">First Name</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <i class="fas fa-align-left prefix light-blue-text text-darken-4"></i>
+        <textarea id="last_name" name="last_name" minlength="5"
+                  maxlength="200" class="materialize-textarea validate" required>
+                    </textarea>
+        <label for="last_name">Last Name</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <i class="fas fa-align-left prefix light-blue-text text-darken-4"></i>
+        <textarea id="email_address" name="email_address" minlength="5"
+                  maxlength="200" class="materialize-textarea validate" required>
+                    </textarea>
+        <label for="email_address">Email Address</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12 center-align">
+        <!-- Cancel Button -->
+        <a href="{{ url_for('profile', username=username) }}" class="btn-large red text-shadow">
+          Cancel <i class="fas fa-times-circle right"></i>
+        </a>
+        <!-- Edit Button -->
+        <button type="submit" class="btn-large light-blue darken-1 text-shadow">
+          Update Profile <i class="fas fa-edit right"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
