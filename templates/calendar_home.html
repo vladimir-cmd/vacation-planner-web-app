@@ -10,7 +10,7 @@
                 $(document).ready(function(){
 
                     $('#calendar').fullCalendar({
-
+                        allDay: false,
                         header: {
                           left: 'prev,next today',
                           center: 'title',
@@ -22,19 +22,17 @@
                         navLinks: true, // can click day/week names to navigate views
                         editable: true,
                         eventLimit: true, // allow "more" link when too many events
-
                         events: [
                               {% for entry in entries %}
                                 {
                                   id: '{{ entry.category_name }}',
                                   title: '{{ entry.entry_type }}',
                                   start: '{{ entry.start_date }}',
-                                  end: '{{ entry.end_date }}',
+                                  end: '{{ (entry.end_date) }}',
                                   table_id: '{{ entry._id }}',
                                 },
                               {% endfor %}
                         ],
-
                         themeSystem: 'jquery-ui',
                         themeName: 'Cupertino',
                         cache: true,

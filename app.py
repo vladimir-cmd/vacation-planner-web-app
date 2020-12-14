@@ -143,7 +143,13 @@ def logout():
 @app.route("/add_entry", methods=["GET", "POST"])
 def add_entry():
     if request.method == "POST":
-        user = mongo.db.users.find_one({ 'username' : session["user"]})
+        user = mongo.db.users.find_one({'username': session["user"]})
+        start_date = datetime.strptime(request.form.get("start_date"), '%d %b, %Y')
+        end_date = datetime.strptime(request.form.get("end_date"), '%d %b, %Y')
+        if end_date < start_date:
+            flash("End Date is before start date. Please correct date entry")
+            return redirect(url_for("add_entry"))
+
         entry = {
             "category_name": request.form.get("category_name"),
             "entry_type": request.form.get("entry_type"),
@@ -155,22 +161,20 @@ def add_entry():
         mongo.db.entries.insert_one(entry)
         flash("Entry successfully added")
 
-        start_date = datetime.strptime(request.form.get("start_date"), '%d %b, %Y')
-        end_date = datetime.strptime(request.form.get("end_date"), '%d %b, %Y')
-
-        day_generator = (start_date + timedelta(x + 1) for x in xrange((end_date - start_date).days))
-        how_many_days = sum(1 for day in day_generator if day.weekday() < 5) + 1
-
-        # how_many_days = (end_date - start_date).days
-        update_user_days = user['vacation_days'] - how_many_days
-        update_vacation_days = {
-            "username": user['username'],
-            "password": user["password"],
-            "vacation_days": update_user_days
-        }
-        mongo.db.users.update({"username": user['username']}, update_vacation_days)
-
-        return redirect(url_for("manage_entries"))
+        # Deduct from Vacation days if Regular Vacation
+        if entry['entry_type'] == "Regular Vacation":
+            day_generator = (start_date + timedelta(x + 1) for x in xrange((end_date - start_date).days))
+            how_many_days = sum(1 for day in day_generator if day.weekday() < 5) + 1
+            update_user_days = user['vacation_days'] - how_many_days
+            mongo.db.users.update_one({
+                "username": user['username']
+                }, {
+                "$set": {
+                    "vacation_days": update_user_days
+                }})
+            return redirect(url_for("manage_entries"))
+        else:
+            return redirect(url_for("manage_entries"))
 
     categories = mongo.db.categories.find().sort("category_name", 1)
     vacation_types = mongo.db.vacation_types.find().sort("entry_type", 1)
@@ -181,41 +185,46 @@ def add_entry():
 def edit_entry(entry_id):
     if request.method == "POST":
         user = mongo.db.users.find_one({'username': session["user"]})
-
-        # First get the current vacation date frame and update vacation days with that number
         entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})
-        start_date_from_entry = datetime.strptime(entry["start_date"], '%d %b, %Y')
-        end_date_from_entry = datetime.strptime(entry["end_date"], '%d %b, %Y')
 
-        day_generator = (start_date_from_entry + timedelta(x + 1) for x in xrange(
-            (end_date_from_entry - start_date_from_entry).days))
-        how_many_days_to_add = sum(1 for day in day_generator if day.weekday() < 5) + 1
+        # Deduct from Vacation days if Regular Vacation
+        if entry['entry_type'] == "Regular Vacation":
+            start_date_from_entry = datetime.strptime(entry["start_date"], '%d %b, %Y')
+            end_date_from_entry = datetime.strptime(entry["end_date"], '%d %b, %Y')
 
-        update_user_days_before_new_deduction = user['vacation_days'] + how_many_days_to_add
-        update_vacation_days = {
-            "username": user['username'],
-            "password": user["password"],
-            "vacation_days": update_user_days_before_new_deduction
-        }
+            day_generator = (start_date_from_entry + timedelta(x + 1) for x in xrange(
+                (end_date_from_entry - start_date_from_entry).days))
+            how_many_days_to_add = sum(1 for day in day_generator if day.weekday() < 5) + 1
 
-        mongo.db.users.update({"username": user['username']}, update_vacation_days)
-        user = mongo.db.users.find_one({'username': session["user"]})
+            update_user_days_before_new_deduction = user['vacation_days'] + how_many_days_to_add
+            mongo.db.users.update_one({
+                "username": user['username']}, {
+                "$set": {
+                    "vacation_days": update_user_days_before_new_deduction
+                }})
 
-        # Next we deduct new amount of vacation days
+            user = mongo.db.users.find_one({'username': session["user"]})
+
+            # Next we deduct new amount of vacation days
+            start_date = datetime.strptime(request.form.get("start_date"), '%d %b, %Y')
+            end_date = datetime.strptime(request.form.get("end_date"), '%d %b, %Y')
+
+            day_generator = (start_date + timedelta(x + 1) for x in xrange((end_date - start_date).days))
+            how_many_days = sum(1 for day in day_generator if day.weekday() < 5) + 1
+
+            update_user_days = user['vacation_days'] - how_many_days
+            mongo.db.users.update_one({
+                "username": user['username']}, {
+                "$set": {
+                    "vacation_days": update_user_days
+                }})
+
+        # Check if End Date is Before Start Date
         start_date = datetime.strptime(request.form.get("start_date"), '%d %b, %Y')
         end_date = datetime.strptime(request.form.get("end_date"), '%d %b, %Y')
-
-        day_generator = (start_date + timedelta(x + 1) for x in xrange((end_date - start_date).days))
-        how_many_days = sum(1 for day in day_generator if day.weekday() < 5) + 1
-
-        # how_many_days = (end_date - start_date).days
-        update_user_days = user['vacation_days'] - how_many_days
-        update_vacation_days = {
-            "username": user['username'],
-            "password": user["password"],
-            "vacation_days": update_user_days
-        }
-        mongo.db.users.update({"username": user['username']}, update_vacation_days)
+        if end_date < start_date:
+            flash("End Date is before start date. Please correct date entry")
+            return redirect(url_for("manage_entries"))
 
         update = {
             "category_name": request.form.get("category_name"),
@@ -237,24 +246,23 @@ def edit_entry(entry_id):
 
 @app.route("/delete_entry/<entry_id>")
 def delete_entry(entry_id):
-
-    # First lets update the vacation days
-    user = mongo.db.users.find_one({ 'username' : session["user"]})
+    user = mongo.db.users.find_one({'username': session["user"]})
     entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})
-    start_date_from_entry = datetime.strptime(entry["start_date"], '%d %b, %Y')
-    end_date_from_entry = datetime.strptime(entry["end_date"], '%d %b, %Y')
+    # Deduct from Vacation days if Regular Vacation
+    if entry['entry_type'] == "Regular Vacation":
+        start_date_from_entry = datetime.strptime(entry["start_date"], '%d %b, %Y')
+        end_date_from_entry = datetime.strptime(entry["end_date"], '%d %b, %Y')
 
-    day_generator = (start_date_from_entry + timedelta(x + 1) for x in xrange(
-        (end_date_from_entry - start_date_from_entry).days))
-    how_many_days_to_add = sum(1 for day in day_generator if day.weekday() < 5) + 1
+        day_generator = (start_date_from_entry + timedelta(x + 1) for x in xrange(
+            (end_date_from_entry - start_date_from_entry).days))
+        how_many_days_to_add = sum(1 for day in day_generator if day.weekday() < 5) + 1
 
-    update_user_days_before_new_deduction = user['vacation_days'] + how_many_days_to_add
-    update_vacation_days = {
-        "username": user['username'],
-        "password": user["password"],
-        "vacation_days": update_user_days_before_new_deduction
-    }
-    mongo.db.users.update({"username": user['username']}, update_vacation_days)
+        update_user_days_before_new_deduction = user['vacation_days'] + how_many_days_to_add
+        mongo.db.users.update_one({
+            "username": user['username']}, {
+            "$set": {
+                "vacation_days": update_user_days_before_new_deduction
+            }})
 
     # Next Lets delete the user entry
     mongo.db.entries.remove({"_id": ObjectId(entry_id)})
