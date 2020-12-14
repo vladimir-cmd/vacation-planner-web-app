@@ -101,17 +101,35 @@ def profile(username):
 @app.route("/profile_update/<username>", methods=["GET", "POST"])
 def profile_update(username):
     # Update profile info
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})
-
+    if request.method == "POST":
+        username = mongo.db.users.find_one(
+            {"username": session["user"]})
+        entry = {
+            "username": username['username'],
+            "password": username["password"],
+            "vacation_days": username["vacation_days"],
+            "first_name": request.form.get("first_name"),
+            "last_name": request.form.get("last_name"),
+            "email_address": request.form.get("email_address")
+        }
+        if entry:
+            mongo.db.users.update({"username": username['username']}, entry)
+            flash("Entry successfully Updated!")
+            username = mongo.db.users.find_one(
+                {"username": session["user"]})
+            return render_template("profile.html", username=username)
     return render_template("edit_profile.html", username=username)
 
 
-@app.route("/delete_profile", methods=["GET", "POST"])
+@app.route("/delete_profile/<username>", methods=["GET", "POST"])
 def delete_profile(username):
     # Delete profile
-
-    return redirect(url_for('register.html'))
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})
+    mongo.db.users.remove({"username": username['username']})
+    flash("User Successfully Deleted!")
+    session.pop("user")
+    return redirect(url_for('register'))
 
 
 @app.route("/logout")
@@ -184,7 +202,7 @@ def edit_entry(entry_id):
         }
 
         mongo.db.users.update({"username": user['username']}, update_vacation_days)
-        user = mongo.db.users.find_one({ 'username' : session["user"]})
+        user = mongo.db.users.find_one({'username': session["user"]})
 
         # Next we deduct new amount of vacation days
         start_date = datetime.strptime(request.form.get("start_date"), '%d %b, %Y')

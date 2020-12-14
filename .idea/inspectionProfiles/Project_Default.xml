@@ -13,20 +13,5 @@
       </option>
       <option name="myCustomValuesEnabled" value="true" />
     </inspection_tool>
-    <inspection_tool class="PyShadowingBuiltinsInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
-      <option name="ignoredNames">
-        <list>
-          <option value="set" />
-        </list>
-      </option>
-    </inspection_tool>
-    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
-      <option name="ignoredIdentifiers">
-        <list>
-          <option value="dict.start_date" />
-          <option value="dict.end_date" />
-        </list>
-      </option>
-    </inspection_tool>
   </profile>
 </component>
