@@ -1,34 +1,29 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
-    <ul class="collapsible">
-        {% for entry in entries %}
-        {% if session.user|lower == entry.created_by|lower %}
-            <li>
-                <div class="collapsible-header white-text light-green darken-4 text-shadow">
-                    <div class="col s3">
-                        <i class="fas fa-caret-down"></i>
-                            <a href="{{ url_for('delete_entry', entry_id=entry._id) }}" class="btn-small red accent-4">Delete</a>
-                            <a href="{{ url_for('edit_entry', entry_id=entry._id) }}" class="btn-small light-blue accent-4">Edit</a>
-                    </div>
-                    <div class="col s9">
-                        <strong>{{ entry.entry_type}}</strong> : {{ entry.entry_description }}
-                        {% if entry.is_urgent == "on" %}
-                            <i class="fas fa-exclamation-circle light-red-text text-lighten-2 tooltipped"
-                               data-position="right" data-tooltip="URGENT!"></i>
-                        {% endif %}
-                    </div>
+<ul class="collapsible">
+    {% for entry in entries %} {% if session.user|lower == entry.created_by|lower %}
+    <li>
+        <div class="collapsible-header white-text light-green darken-4 text-shadow">
+            <div class="row">
+                <div class="col s12 m4 l8">
+                    <i class="fas fa-caret-down"></i>
+                    <a href="{{ url_for('delete_entry', entry_id=entry._id) }}" class="btn-small red accent-4">Delete</a>
+                    <a href="{{ url_for('edit_entry', entry_id=entry._id) }}" class="btn-small light-blue accent-4">Edit</a>
+                </div>
+                <div class="col s12 m4 l8">
+                    <strong>{{ entry.entry_type}}</strong> : {{ entry.entry_description }}
+                </div>
+            </div>
+        </div>
+        <div class="collapsible-body">
+            <strong>{{ entry.category_name }}</strong><br>
+            <strong>{{ entry.start_date }}</strong><br>
+            <strong>{{ entry.end_date }}</strong><br>
+            <p><em>by: {{ entry.created_by }}</em></p>
+        </div>
+    </li>
+    {% endif %} {% endfor %}
+</ul>
 
-                </div>
-                <div class="collapsible-body">
-                    <strong>{{ entry.category_name }}</strong><br>
-                    <strong>{{ entry.start_date }}</strong><br>
-                    <strong>{{ entry.end_date }}</strong><br>
-                    <p><em>by: {{ entry.created_by }}</em></p>
-                </div>
-            </li>
-        {% endif %}
-        {% endfor %}
-    </ul>
 
 {% endblock %}

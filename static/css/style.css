@@ -1,5 +1,5 @@
 body {
-    background-color: white ;
+    background-color: white;
 }
 
 .text-shadow {
@@ -11,96 +11,198 @@ body {
 }
 
 .btn-small {
-  margin: 5px;
+    margin: 5px;
 }
 
 .collapsible-header .col strong {
-  margin: 5px;
-  line-height: 42px;
+    margin: 5px;
+    line-height: 42px;
 }
 
 .collapsible-body {
-  margin: 10px;
-  font-size: 20px;
+    margin: 10px;
+    font-size: 20px;
 }
 
-* {box-sizing: border-box}
+.container {
+    width: 70%;
+}
+
+.row {
+    width: 100%;
+}
+
+.row .col.l8 {
+    width: 100%;
+}
+
+* {
+    box-sizing: border-box
+}
 
 button:hover {
-  opacity:1;
+    opacity: 1;
 }
+
 
 /* Float cancel and delete buttons and add an equal width */
-.cancelbtn, .deletebtn {
-  float: left;
-  width: 50%;
+
+.cancelbtn,
+.deletebtn {
+    float: left;
+    width: 50%;
 }
+
 
 /* Add a color to the cancel button */
+
 .cancelbtn {
-  background-color: #ccc;
-  color: black;
+    background-color: #ccc;
+    color: black;
 }
+
 
 /* Add a color to the delete button */
+
 .deletebtn {
-  background-color: #f44336;
+    background-color: #f44336;
 }
+
 
 /* The Modal (background) */
+
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: #474e5d;
-  padding-top: 50px;
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: #474e5d;
+    padding-top: 50px;
 }
+
 
 /* Modal Content/Box */
+
 .modal-content {
-  background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+    background-color: #fefefe;
+    margin: 5% auto 15% auto;
+    /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
 }
+
 
 /* Style the horizontal ruler */
+
 hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
 }
 
+
 /* The Modal Close Button (x) */
+
 .close {
-  position: absolute;
-  right: 35px;
-  top: 15px;
-  font-size: 40px;
-  font-weight: bold;
-  color: #f1f1f1;
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #f1f1f1;
 }
 
 .close:hover,
 .close:focus {
-  color: #f44336;
-  cursor: pointer;
+    color: #f44336;
+    cursor: pointer;
 }
+
 
 /* Clear floats */
+
 .clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
+    content: "";
+    clear: both;
+    display: table;
 }
 
+
 /* Change styles for cancel button and delete button on extra small screens */
-@media screen and (max-width: 300px) {
-  .cancelbtn, .deletebtn {
-    width: 100%;
-  }
+
+@media screen and (max-width: 976px) {
+    .cancelbtn,
+    .deletebtn {
+        width: 100%;
+    }
+    .container {
+        width: 80%;
+        margin-left: 10%;
+    }
+    .row {
+        width: 70%;
+        text-align: left;
+    }
+    .row .col.l8 {
+        margin-left: -100px;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .cancelbtn,
+    .deletebtn {
+        width: 100%;
+    }
+    .container {
+        width: 100%;
+        margin-left: 0%;
+    }
+    .row {
+        width: 100%;
+    }
+    .row .col.l8 {
+        margin-left: 0px;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .cancelbtn,
+    .deletebtn {
+        width: 100%;
+    }
+    nav .brand-logo {
+        font-size: 150%;
+    }
+    .container {
+        width: 100%;
+        margin-left: 0%;
+    }
+    .row {
+        width: 100%;
+    }
+    .row .col.l8 {
+        margin-left: 0px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .cancelbtn,
+    .deletebtn {
+        width: 100%;
+    }
+    nav .brand-logo {
+        font-size: 150%;
+    }
 }
