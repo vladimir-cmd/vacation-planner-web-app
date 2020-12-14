@@ -32,7 +32,7 @@ $(document).ready(function(){
                 $(".select-wrapper input.select-dropdown").on("focusout", function () {
                     if ($(this).parent(".select-wrapper").children("select").prop("required")) {
                         if ($(this).css("border-bottom") != "1px solid rgb(76, 175, 80)") {
-                            $(this).parent(".select-wrapper").children("input").css(classInvalid);
+                            $(this).parent(".select-wrapper").children("input").css(classValid);
                         }
                     }
                 });

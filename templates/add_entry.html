@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h3 class="light-blue-text text-darken-4 center-align">Add Entry</h3>
+    <h2 class="light-blue-text text-darken-4 center-align">Add Entry</h2>
 
     <div class="row card-panel grey lighten-5">
         <form class="col s12" method="POST" action="{{ url_for('add_entry') }}">
@@ -56,20 +56,6 @@
                     <input id="end_date" name="end_date" class="datepicker validate"
                            type="text" required>
                     <label for="end_date">End Date</label>
-                </div>
-            </div>
-            <!-- Half day switch -->
-            <div class="row">
-                <div class="input-field col s12">
-                    <!-- Switch -->
-                    <div class="switch">
-                        <i class="fas fa-exclamation-circle prefix light-blue-text text-darken-4"></i>
-                        <label for="half_day">
-                            <input type="checkbox" id="half_day" name="half_day">
-                            <span class="lever"></span>
-                            Half Day
-                        </label>
-                    </div>
                 </div>
             </div>
 <!--             Submit Button -->

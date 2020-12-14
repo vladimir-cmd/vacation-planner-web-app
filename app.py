@@ -143,7 +143,6 @@ def logout():
 @app.route("/add_entry", methods=["GET", "POST"])
 def add_entry():
     if request.method == "POST":
-        half_day = "on" if request.form.get("half_day") else "off"
         user = mongo.db.users.find_one({ 'username' : session["user"]})
         entry = {
             "category_name": request.form.get("category_name"),
@@ -151,7 +150,6 @@ def add_entry():
             "entry_description": request.form.get("entry_description"),
             "start_date": request.form.get("start_date"),
             "end_date": request.form.get("end_date"),
-            "half_day": half_day,
             "created_by": session["user"]
         }
         mongo.db.entries.insert_one(entry)
@@ -182,7 +180,6 @@ def add_entry():
 @app.route("/edit_entry/<entry_id>", methods=["GET", "POST"])
 def edit_entry(entry_id):
     if request.method == "POST":
-        half_day = "on" if request.form.get("half_day") else "off"
         user = mongo.db.users.find_one({'username': session["user"]})
 
         # First get the current vacation date frame and update vacation days with that number
@@ -226,7 +223,6 @@ def edit_entry(entry_id):
             "entry_description": request.form.get("entry_description"),
             "start_date": request.form.get("start_date"),
             "end_date": request.form.get("end_date"),
-            "half_day": half_day,
             "created_by": session["user"]
         }
 

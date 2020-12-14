@@ -42,12 +42,6 @@ button:hover {
   background-color: #f44336;
 }
 
-/* Add padding and center-align text to the container */
-.container {
-  padding: 16px;
-  text-align: center;
-}
-
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
