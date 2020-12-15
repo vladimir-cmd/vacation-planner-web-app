@@ -2,13 +2,23 @@ body {
     background-color: white;
 }
 
+
+/* Flash message */
+
 .flashes h4 {
     line-height: 4;
+    font-size: 150%;
 }
+
+
+/* Button bit */
 
 .btn-small {
     margin: 5px;
 }
+
+
+/* Collapsible header bit */
 
 .collapsible-header .col strong {
     margin: 5px;
@@ -19,6 +29,9 @@ body {
     margin: 10px;
     font-size: 20px;
 }
+
+
+/* Generic CSS bit */
 
 .container {
     width: 70%;
@@ -39,6 +52,9 @@ body {
 button:hover {
     opacity: 1;
 }
+
+
+/* Confirmation Page bit */
 
 
 /* Float cancel and delete buttons and add an equal width */
@@ -134,7 +150,7 @@ hr {
 }
 
 
-/* Change styles for cancel button and delete button on extra small screens */
+/* Different sizes bit */
 
 @media screen and (max-width: 976px) {
     .cancelbtn,
@@ -191,6 +207,10 @@ hr {
     .row .col.l8 {
         margin-left: 0px;
     }
+    .flashes h4 {
+        line-height: 4;
+        font-size: 80%;
+    }
 }
 
 @media screen and (max-width: 400px) {
@@ -200,5 +220,9 @@ hr {
     }
     nav .brand-logo {
         font-size: 150%;
+    }
+    .flashes h4 {
+        line-height: 4;
+        font-size: 80%;
     }
 }
