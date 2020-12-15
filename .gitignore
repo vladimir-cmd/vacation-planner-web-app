@@ -1,5 +1,5 @@
 __pycache__/
-.env.py
+env.py
 .idea
 .theia
 .gitpod.dockerfile
