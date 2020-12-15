@@ -51,43 +51,71 @@ I used [AdobeXD](https://www.adobe.com/ie/products/xd.html) to create
 
 ### Page Features:
 
-- [Home](http://vacation-planner-web-app.herokuapp.com/calendar_home)
-
-  - This page starts with a header.
+- [Home](https://vacation-planner-web-app.herokuapp.com/calendar_home)
   - Home page contains calendar where user can see its days booked.
   - Calendar can be switched to month, week, or day view. 
   - User can click on a specific date to update the entry.
   - User can move between months.
+  - User can modify only its own entries.
 
-- [Profile](http://vacation-planner-web-app.herokuapp.com/profile/<username>)
+- [Profile](https://vacation-planner-web-app.herokuapp.com/profile/<username>)
   - Profile page contains information about user
   - User can click on 'Update Profile Info' button to enter following:
     - First Name
     - Last Name
     - Email Address
+    - Department
   - User can see how many days there are left
   - User can also delete its own profile by clicking on 'Delete Profile' button
     - Sanity check will be executed -> there will be a popup asking user if its sure
+    - By deleting user, all its entries will be deleted as well 
   
-- [New Entry](http://vacation-planner-web-app.herokuapp.com/add_entry)
+- [New Entry](https://vacation-planner-web-app.herokuapp.com/add_entry)
   - On this page user can add new Vacation entry
   - User can choose from the following:
     - Select Department (Choose Department)
+      - If you already have Department specified, you can only add entry for that department
     - Select Entry Type (Choose Entry Type)
     - Entry Description
     - Start Date
     - End Date
     
 
-### All Page Features:
+- [Edit Entry](https://vacation-planner-web-app.herokuapp.com/edit_entry/<entry_id>)
+  - On this page user can edit its own Vacation entry
+  - User can choose from the following:
+    - Select Department (Choose Department)
+      - If you already have Department specified, you can only add entry for that department
+    - Select Entry Type (Choose Entry Type)
+    - Entry Description
+    - Start Date
+    - End Date
+    
 
-- **Semantic HTML**: All pages have been written with semantic HTML in mind.
-- **Fixed Header**: Each page has a fixed header, for ease of navigation.
-- **Responsive Design**: Site pages are designed to work on all sizes of device.
+- [Manage Entry](https://vacation-planner-web-app.herokuapp.com/manage_entries)
+  - On this page user can get the overview of its own Vacation entries
+  - User can choose from the following:
+    - Delete entry
+      - Completely deletes entry from the database
+    - Edit entry:
+        - Select Department (Choose Department)
+          - If you already have Department specified, you can only add entry for that department
+        - Select Entry Type (Choose Entry Type)
+        - Entry Description
+        - Start Date
+        - End Date
 
-### Specific Features:
 
-- **Subscribe to Newsletter**: Every page includes subscribe to newsletter section where visitor can subscribe for the latest recepies.
+- [Register](https://vacation-planner-web-app.herokuapp.com/register)
+  - Future user can register by entering username
+  - User must specify password two times
+  - Password mus match
+  
+
+- [Login](https://vacation-planner-web-app.herokuapp.com/login)
+  - User must login in order to add/modify/delete entry
+  - User must provide username and password
+    
 
 ## Technologies Used
 
@@ -105,19 +133,28 @@ In this project the following technologies have been used.
 
   - Programming language for the workability of the site.
 
-- [Google Fonts](https://fonts.google.com/)
-
-  - Google's font catalog places typography front and center, inviting users to explore, sort, and test fonts for use in more than 135 languages.
-
 - [FontAwesome](https://fontawesome.com/)
 
   - **FontAwesome** provided the icons used on the page.
 
-- [Bootstrap 4](https://getbootstrap.com/)
+- [Materialize](https://materializecss.com/about.html)
 
-  - To be easily responsive, navbar, the list groups, card decks and forms were used to give a clean, simple and ordered look. I wanted to re-inforce what I had learnt from the UCFD module.
+  - Created and designed by Google, Material Design is a design language that combines the classic principles of successful design along with innovation and technology. 
+  - Google's goal is to develop a system of design that allows for a unified user experience across all their products on any platform.
 
-- [Gitpod](https://gitpod.io/)
+- [MongoDB](https://www.mongodb.com/1)
+
+  - Database solution for the site
+  
+- [Python Flask](https://flask.palletsprojects.com/en/1.1.x/)
+
+  - Python Web Framework working closely with Jinja templates and Werkzeug WSGI toolkit.
+
+- [Visual Studio Code](https://code.visualstudio.com/)
+
+  - IDE (Integrated Development Environment).
+
+- [IntelliJ Idea Community Edition](https://www.jetbrains.com/idea/)
 
   - IDE (Integrated Development Environment).
 
@@ -133,65 +170,20 @@ In this project the following technologies have been used.
 
   - To check for any errors in the CSS code.
 
-- [W3C Markup Validator](https://validator.w3.org/)
-  - To check for any errors in HTML code.
-
 ## Testing
 
-Testing information is found on a separate file [TESTING.MD](https://vladimir-cmd.github.io/pub_restaurant_search.github.io/TESTING.md)
+Testing information is found on a separate file [TESTING.MD](https://github.com/vladimir-cmd/vacation-planner-web-app)
 
 ## Deployment
 
 Creation of website
 
-This website is deployed using GitHub pages.
-
-**GitHub pages** was used to deploy this site. 
-   1. Go to repository master branch ([Source](https://vladimir-cmd.github.io/pub_restaurant_search.github.io))
-   2. Press Settings button on right. 
-   3. Scroll down to Github Pages section. 
-   4. There will be link to website
-   Note: there is only a master branch. No other branches were created.
-
-To run the copy of website, there are two options:
-
-1. Sign to your GitHub account
-2. search for the following repository: https://vladimir-cmd.github.io/pub_restaurant_search.github.io
-3. In the upper right corner click on "Fork" button
-4. You have successfully duplicated my website to your GitHub account
-
-OR
-
-Important: must have git CLI installed on local machine
-
-1. Sign to your GitHub account
-2. search for the following repository: https://vladimir-cmd.github.io/pub_restaurant_search.github.io
-3. Click on "Clone or download" button and copy the path
-4. Open Command Line interface (Windows - Powershell or Linux\MacOS - Terminal)
-5. git clone https://github.com/vladimir-cmd/pub_restaurant_search.github.io.git
-6. You have successfully clonned repository on your local machine
-   Note: You would require a web server to run the site from your local machine.
-   As a workaround, you can use repl.it
-
-You can open the site in repl.it
-
-1. Sign to your GitHub account
-2. search for the following repository: https://vladimir-cmd.github.io/pub_restaurant_search.github.io
-3. Click on "Clone or download" button and copy the path
-4. Open repl.it
-5. Navigate to myrepls
-6. In the upper right corner click on "new repl"
-7. In a new window, select "Import From GitHub"
-8. Paste the link you copied in step 3
+This website is deployed using Heroku.
 
 ## Credits
 
 ### Content
-- The Map is Google Maps [Google Maps](https://maps.google.com/)
 
 ### Media
-- The photos used are taken from [Unsplash](https://unsplash.com/) - Photos for everyone
 
 ### Acknowledgements
-
-- I want to give huge thanks to my mentor [Precious Ilege](https://www.linkedin.com/in/precious-ijege-908a00168/) for guiding me thru this milestone project. I would not be able to finish this project on time if not for Precious. His suggestions, advices, and mentoring helped me in great deal to finish this project on time, even though I started late.

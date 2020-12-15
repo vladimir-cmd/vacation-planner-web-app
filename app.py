@@ -318,10 +318,14 @@ def delete_entry(entry_id):
     return redirect(url_for("manage_entries"))
 
 
-@app.route("/calendar_home")
+@app.route("/calendar_home", methods=["GET"])
 def calendar_home():
-    entries = mongo.db.entries.find()
-    return render_template("calendar_home.html", entries=entries)
+    if session:
+        entries = mongo.db.entries.find()
+        return render_template("calendar_home.html", entries=entries)
+    else:
+        flash("You are not logged in. Please Login/Register to see the Calendar")
+        return redirect(url_for('register'))
 
 
 if __name__ == "__main__":
