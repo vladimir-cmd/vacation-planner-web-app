@@ -39,40 +39,45 @@ Reason why creating this web application:
 ## Wireframes
 
 I used [AdobeXD](https://www.adobe.com/ie/products/xd.html) to create
-[wireframes](https://github.com/vladimir-cmd/pub_restaurant_search.github.io/tree/master/wireframes-mockups) in: 
-[desktop](https://github.com/vladimir-cmd/pub_restaurant_search.github.io/tree/master/wireframes-mockups/desktop.png), 
-[tablet](https://github.com/vladimir-cmd/pub_restaurant_search.github.io/tree/master/wireframes-mockups/ipad.png) and 
-[phone](https://github.com/vladimir-cmd/pub_restaurant_search.github.io/tree/master/wireframes-mockups/iphone.png) view.
+[wireframes](https://github.com/vladimir-cmd/vacation-planner-web-app/tree/master/wireframes-mockups) in: 
+[Front Page Before Login](https://github.com/vladimir-cmd/vacation-planner-web-app/blob/master/wireframes-mockups/Front_Page_Before_Login.png), 
+[Front Page After Login](https://github.com/vladimir-cmd/vacation-planner-web-app/blob/master/wireframes-mockups/Front_Page_After_Login.png), 
+[User Profile Page](https://github.com/vladimir-cmd/vacation-planner-web-app/blob/master/wireframes-mockups/Users_profile.png), 
+[Add New Entry](https://github.com/vladimir-cmd/vacation-planner-web-app/blob/master/wireframes-mockups/Add_New_Entry.png), 
+[Edit Entry](https://github.com/vladimir-cmd/vacation-planner-web-app/blob/master/wireframes-mockups/Edit_Entry.png), 
+[Manage Entry](https://github.com/vladimir-cmd/vacation-planner-web-app/blob/master/wireframes-mockups/Manage_Entries.png)
 
 ## Features
 
 ### Page Features:
 
-- [Home](https://vladimir-cmd.github.io/pub_restaurant_search.github.io/index.html)
+- [Home](http://vacation-planner-web-app.herokuapp.com/calendar_home)
 
   - This page starts with a header.
-  - Home page contains section where user can find one search field and two dropdown buttons.
-  - In search field user can enter any keyword which relates to cafe, pub, or restaurant name
-  - User can also select one of the 32 counties to filter the search for a specific county.
-  - User also can selct one of three establishments to further filter the search for a specific county.
-  - After this section there is a Google Maps page, where the results are being shown.
-  - On the right hand side from Google Maps page, there is a table with Google Maps results being shown as well.
-  - At the bottom of the page is a neat row of social links consisting of Facebook, Twitter, Instagram and Youtube.
+  - Home page contains calendar where user can see its days booked.
+  - Calendar can be switched to month, week, or day view. 
+  - User can click on a specific date to update the entry.
+  - User can move between months.
 
-- [Contact](https://vladimir-cmd.github.io/pub_restaurant_search.github.io/contact.html)
-  - Contact page contains an email form which visitor can fill out and send.
-  - This page starts with a header, with a hero image coming right after.
-  - Over the hero image there is a contact form box.
-  - The required fields are clearly indicated, with a possible notification in case a visitor doesn't fill all the required fields successfully.
-  - Newsletter subsection follows, where visitor can subscribe.
-  - At the bottom of the page is a neat row of social links consisting of Facebook, Twitter, Instagram and Youtube.
-- [About](https://vladimir-cmd.github.io/pub_restaurant_search.github.io/about.html)
-  - About Us page contains photos of creators of the website and a small description
-  - This page starts with a header.
-  - For a Desktop resolution, there are three columns with one row only.
-  - Each image has a title and a small description.
-  - Newsletter subsection follows, where visitor can subscribe.
-  - At the bottom of the page is a neat row of social links consisting of Facebook, Twitter, Instagram and Youtube.
+- [Profile](http://vacation-planner-web-app.herokuapp.com/profile/<username>)
+  - Profile page contains information about user
+  - User can click on 'Update Profile Info' button to enter following:
+    - First Name
+    - Last Name
+    - Email Address
+  - User can see how many days there are left
+  - User can also delete its own profile by clicking on 'Delete Profile' button
+    - Sanity check will be executed -> there will be a popup asking user if its sure
+  
+- [New Entry](http://vacation-planner-web-app.herokuapp.com/add_entry)
+  - On this page user can add new Vacation entry
+  - User can choose from the following:
+    - Select Department (Choose Department)
+    - Select Entry Type (Choose Entry Type)
+    - Entry Description
+    - Start Date
+    - End Date
+    
 
 ### All Page Features:
 

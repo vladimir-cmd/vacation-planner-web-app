@@ -8,11 +8,6 @@
             </h3>
             <h3>
                 <strong>
-                        Vacation days left: {{ username.vacation_days }}
-                    </strong>
-            </h3>
-            <h3>
-                <strong>
                         First Name: {{ username.first_name }}
                     </strong>
             </h3>
@@ -26,15 +21,21 @@
                         Email address: {{ username.email_address }}
                     </strong>
             </h3>
+            <h3>
+                <strong>
+                        Department: {{ username.department }}
+                    </strong>
+            </h3>
+            <h3>
+                <strong>
+                    Vacation days left: {{ username.vacation_days }}
+                </strong>
+            </h3>
 
             <a href="{{ url_for('profile_update', username=username) }}" class="btn-small blue accent-4">
                     Update Profile Info
                 </a>
-<!--            <a href="{{ url_for('delete_profile', username=username) }}" class="btn-small red accent-4">-->
-<!--                                Delete Profile-->
-<!--                            </a>-->
             <button class="btn-small red accent-4" onclick="document.getElementById('delete_popup').style.display='block'">Delete Profile</button>
-
             <div id="delete_popup" class="modal">
                 <span onclick="document.getElementById('delete_popup').style.display='none'" class="close" title="Close Modal">&times;</span>
                 <form class="modal-content" action="{{ url_for('delete_profile', username=username) }}">

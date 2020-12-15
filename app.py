@@ -44,7 +44,8 @@ def register():
             register_user = {
                 "username": request.form.get("username").lower(),
                 "password": generate_password_hash(request.form.get("password")),
-                "vacation_days": 25
+                "vacation_days": 25,
+                "department": ""
             }
 
             mongo.db.users.insert_one(register_user)
@@ -104,21 +105,21 @@ def profile_update(username):
     if request.method == "POST":
         username = mongo.db.users.find_one(
             {"username": session["user"]})
-        entry = {
-            "username": username['username'],
-            "password": username["password"],
-            "vacation_days": username["vacation_days"],
-            "first_name": request.form.get("first_name"),
-            "last_name": request.form.get("last_name"),
-            "email_address": request.form.get("email_address")
-        }
-        if entry:
-            mongo.db.users.update({"username": username['username']}, entry)
-            flash("Entry successfully Updated!")
-            username = mongo.db.users.find_one(
-                {"username": session["user"]})
-            return render_template("profile.html", username=username)
-    return render_template("edit_profile.html", username=username)
+        mongo.db.users.update_one({
+            "username": username['username']
+        }, {
+            "$set": {
+                "first_name": request.form.get("first_name"),
+                "last_name": request.form.get("last_name"),
+                "email_address": request.form.get("email_address"),
+                "department": request.form.get("department")
+            }})
+        flash("Entry successfully Updated!")
+        username = mongo.db.users.find_one(
+            {"username": session["user"]})
+        return render_template("profile.html", username=username)
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    return render_template("edit_profile.html", username=username, categories=categories)
 
 
 @app.route("/delete_profile/<username>", methods=["GET", "POST"])
@@ -126,6 +127,7 @@ def delete_profile(username):
     # Delete profile
     username = mongo.db.users.find_one(
         {"username": session["user"]})
+    mongo.db.entries.remove({"created_by": username['username']})
     mongo.db.users.remove({"username": username['username']})
     flash("User Successfully Deleted!")
     session.pop("user")
@@ -150,6 +152,41 @@ def add_entry():
             flash("End Date is before start date. Please correct date entry")
             return redirect(url_for("add_entry"))
 
+        add_entry_department = request.form.get("category_name")
+        user_department = user["department"]
+        if user["department"] == "":
+            mongo.db.users.update_one({
+                "username": user['username']
+            }, {
+                "$set": {
+                    "department": request.form["category_name"]
+                }})
+        else:
+            if add_entry_department != user_department:
+                print("Add entry department: {} is not the same as user department: {}".format(
+                    add_entry_department, user_department))
+                flash("""Departments doesn't match. 
+                    If you want to select different department, update your department in Profile""")
+                return redirect(url_for("add_entry"))
+
+        # Deduct from Vacation days if Regular Vacation
+        entry_type = request.form.get("entry_type")
+        if entry_type == "Regular Vacation":
+            day_generator = (start_date + timedelta(x + 1) for x in xrange((end_date - start_date).days))
+            how_many_days = sum(1 for day in day_generator if day.weekday() < 5) + 1
+            update_user_days = user['vacation_days'] - how_many_days
+
+            if update_user_days <= 0:
+                flash("Current status of days left {}! You don't have enough days!".format(user['vacation_days']))
+                return redirect(url_for("manage_entries"))
+            else:
+                mongo.db.users.update_one({
+                    "username": user['username']
+                }, {
+                    "$set": {
+                        "vacation_days": update_user_days
+                    }})
+
         entry = {
             "category_name": request.form.get("category_name"),
             "entry_type": request.form.get("entry_type"),
@@ -161,21 +198,6 @@ def add_entry():
         mongo.db.entries.insert_one(entry)
         flash("Entry successfully added")
 
-        # Deduct from Vacation days if Regular Vacation
-        if entry['entry_type'] == "Regular Vacation":
-            day_generator = (start_date + timedelta(x + 1) for x in xrange((end_date - start_date).days))
-            how_many_days = sum(1 for day in day_generator if day.weekday() < 5) + 1
-            update_user_days = user['vacation_days'] - how_many_days
-            mongo.db.users.update_one({
-                "username": user['username']
-                }, {
-                "$set": {
-                    "vacation_days": update_user_days
-                }})
-            return redirect(url_for("manage_entries"))
-        else:
-            return redirect(url_for("manage_entries"))
-
     categories = mongo.db.categories.find().sort("category_name", 1)
     vacation_types = mongo.db.vacation_types.find().sort("entry_type", 1)
     return render_template("add_entry.html", categories=categories, vacation_types=vacation_types)
@@ -186,6 +208,32 @@ def edit_entry(entry_id):
     if request.method == "POST":
         user = mongo.db.users.find_one({'username': session["user"]})
         entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})
+
+        username = user["username"]
+        entry_username = entry["created_by"]
+        if username != entry_username:
+            flash("""This is not your entry. You can edit only your own!
+                        Please select only your entry!""")
+            return redirect(url_for("calendar_home"))
+
+        print("User: {} and Created By: {}".format(username, entry_username))
+
+        add_entry_department = request.form.get("category_name")
+        user_department = user["department"]
+        if user["department"] == "":
+            mongo.db.users.update_one({
+                "username": user['username']
+            }, {
+                "$set": {
+                    "department": request.form["category_name"]
+                }})
+        else:
+            if add_entry_department != user_department:
+                print("Add entry department: {} is not the same as user department: {}".format(
+                    add_entry_department, user_department))
+                flash("""Departments doesn't match. 
+                        If you want to select different department, update your department in Profile""")
+                return redirect(url_for("manage_entries"))
 
         # Deduct from Vacation days if Regular Vacation
         if entry['entry_type'] == "Regular Vacation":
