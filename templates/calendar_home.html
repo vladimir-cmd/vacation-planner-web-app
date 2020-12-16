@@ -39,7 +39,7 @@
 
                         eventClick: function(calEvent, jsEvent, view){
                             $(this).toggleClass('newColor');
-                            window.open('https://vacation-planner-web-app.herokuapp.com//edit_entry/' + calEvent.table_id, "_self");
+                            window.open('https://vacation-planner-web-app.herokuapp.com/edit_entry/' + calEvent.table_id, "_self");
                             console.log(calEvent); // "id" if it is set by the event object, will be here.
                             console.log(this);  // is the div element that was clicked on
                         }
